@@ -19,7 +19,6 @@ env:
 
 cache: pip
 
-
 # requirements.txt are automatically installed during 'install' phase.
 
 before_script:
