@@ -1217,8 +1217,6 @@ cdef bytes _asciiOrNone(s):
         return s
     elif isinstance(s, unicode):
         return (<unicode>s).encode('ascii')
-    elif isinstance(s, bytearray):
-        s = bytes(s)
     elif not isinstance(s, bytes):
         raise ValueError("expected string, got %s" % type(s))
     if not _isascii(<bytes>s):
