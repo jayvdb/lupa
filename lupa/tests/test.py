@@ -2152,10 +2152,16 @@ class KwargsDecoratorTest(SetupLuaRuntimeMixin, unittest.TestCase):
 
     def assertResult(self, f, call_txt, res_txt):
         lua_func = self.lua.eval("function (f) return f%s end" % call_txt)
-        self.assertEqual(lua_func(f), res_txt)
+        print('doing func', lua_func)
+        func_rv = lua_func(f)
+        print('done func')
+        self.assertEqual(func_rv, res_txt)
 
     def assertIncorrect(self, f, call_txt):
         lua_func = self.lua.eval("function (f) return f%s end" % call_txt)
+        print('doing func', lua_func)
+        lua_func(f)
+        print('done func')
         self.assertRaises(TypeError, lua_func, f)
 
     def test_many_args(self):
