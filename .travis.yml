@@ -1,17 +1,13 @@
 language: python
 python:
-  - 3.5
-  - pypy
   - pypy3
 
 addons:
   apt:
     packages:
-      - libluajit-5.1-dev
       - liblua5.2-dev
 
 env:
-  - LUA=luajit-5.1
   - LUA=lua5.2
 
 before_script:

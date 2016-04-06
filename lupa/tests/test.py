@@ -27,6 +27,7 @@ class SetupLuaRuntimeMixin(object):
 
     def setUp(self):
         self.lua = lupa.LuaRuntime(**self.lua_runtime_kwargs)
+        print('setup done')
 
     def tearDown(self):
         self.lua = None
