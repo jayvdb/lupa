@@ -254,7 +254,10 @@ cdef class LuaRuntime:
         assert self._state is not NULL
         if isinstance(lua_code, unicode):
             lua_code = (<unicode>lua_code).encode(self._source_encoding)
-        return run_lua(self, b'return ' + lua_code, args)
+        print('about to run lua')
+        rv = run_lua(self, b'return ' + lua_code, args)
+        print('done running lua')
+        return rv
 
     def execute(self, lua_code, *args):
         """Execute a Lua program passed in a string.
