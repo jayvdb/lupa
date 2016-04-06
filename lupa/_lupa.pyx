@@ -27,11 +27,6 @@ from cpython.string cimport PyString_FromFormat
 #    define IS_PYPY 0
 #endif
 
-# PyPy3 does not have PyString_FromFormat
-#if IS_PYPY
-#   define PyString_FromFormat PyUnicode_FromFormat
-#endif
-
 from libc.stdint cimport uintptr_t
 
 cdef extern from *:
@@ -643,6 +638,9 @@ cdef void init_lua_object(_LuaObject obj, LuaRuntime runtime, lua_State* L, int 
     obj._ref = lua.luaL_ref(L, lua.LUA_REGISTRYINDEX)
 
 cdef object lua_object_repr(lua_State* L, encoding):
+#if IS_PYPY
+    return "<Lua>"
+#else
     cdef bytes py_bytes
     lua_type = lua.lua_type(L, -1)
     if lua_type in (lua.LUA_TTABLE, lua.LUA_TFUNCTION):
@@ -664,7 +662,7 @@ cdef object lua_object_repr(lua_State* L, encoding):
     except UnicodeDecodeError:
         # safe 'decode'
         return py_bytes.decode('ISO-8859-1')
-
+#endif
 
 @cython.final
 @cython.internal
