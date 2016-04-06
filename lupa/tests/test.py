@@ -2142,10 +2142,10 @@ class MyCls_3(object):
         return ("x=%s, y=%s, z=%s" % (x, y, z))
 
 
-class KwargsDecoratorTest(SetupLuaRuntimeMixin, unittest.TestCase):
+class _KwargsDecoratorTst(SetupLuaRuntimeMixin, unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        super(KwargsDecoratorTest, self).__init__(*args, **kwargs)
+        super(_KwargsDecoratorTst, self).__init__(*args, **kwargs)
         self.arg1 = func_1
         self.arg2 = func_2
         self.arg3 = func_3
@@ -2258,10 +2258,10 @@ class KwargsDecoratorTest(SetupLuaRuntimeMixin, unittest.TestCase):
 
 
 
-class MethodKwargsDecoratorTest(KwargsDecoratorTest):
+class _MethodKwargsDecoratorTest(_KwargsDecoratorTst):
 
     def __init__(self, *args, **kwargs):
-        super(MethodKwargsDecoratorTest, self).__init__(*args, **kwargs)
+        super(_MethodKwargsDecoratorTest, self).__init__(*args, **kwargs)
         self.arg1 = MyCls_1()
         self.arg2 = MyCls_2()
         self.arg3 = MyCls_3()
@@ -2275,11 +2275,11 @@ class MethodKwargsDecoratorTest(KwargsDecoratorTest):
         self.assertRaises(TypeError, lua_func, f)
 
 
-class NoEncodingKwargsDecoratorTest(KwargsDecoratorTest):
+class _NoEncodingKwargsDecoratorTest(_KwargsDecoratorTst):
     lua_runtime_kwargs = {'encoding': None}
 
 
-class NoEncodingMethodKwargsDecoratorTest(MethodKwargsDecoratorTest):
+class _NoEncodingMethodKwargsDecoratorTest(_MethodKwargsDecoratorTest):
     lua_runtime_kwargs = {'encoding': None}
 
 
