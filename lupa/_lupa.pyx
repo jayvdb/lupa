@@ -21,6 +21,12 @@ from cpython.method cimport (
 from cpython.version cimport PY_MAJOR_VERSION
 from cpython.string cimport PyString_FromFormat
 
+#ifdef PYPY_VERSION
+#    define IS_PYPY 1
+#else
+#    define IS_PYPY 0
+#endif
+
 # PyPy3 does not have PyString_FromFormat
 #if IS_PYPY
 #   define PyString_FromFormat PyUnicode_FromFormat
