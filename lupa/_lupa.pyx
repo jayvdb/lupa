@@ -19,7 +19,12 @@ from cpython.ref cimport PyObject
 from cpython.method cimport (
     PyMethod_Check, PyMethod_GET_SELF, PyMethod_GET_FUNCTION)
 from cpython.version cimport PY_MAJOR_VERSION
-from cpython.bytes cimport PyBytes_FromFormat
+from cpython.string cimport PyString_FromFormat
+
+# PyPy3 does not have PyString_FromFormat
+#if IS_PYPY
+#   define PyString_FromFormat PyUnicode_FromFormat
+#endif
 
 from libc.stdint cimport uintptr_t
 
@@ -643,10 +648,10 @@ cdef object lua_object_repr(lua_State* L, encoding):
     else:
         ptr = NULL
     if ptr:
-        py_bytes = PyBytes_FromFormat(
+        py_bytes = PyUnicode_FromFormat(
             "<Lua %s at %p>", lua.lua_typename(L, lua_type), ptr)
     else:
-        py_bytes = PyBytes_FromFormat(
+        py_bytes = PyUnicode_FromFormat(
             "<Lua %s>", lua.lua_typename(L, lua_type))
     try:
         return py_bytes.decode(encoding)
